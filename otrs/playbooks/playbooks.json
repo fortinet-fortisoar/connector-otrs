@@ -1,0 +1,328 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - OTRS - 1.0.0",
+      "description": "Creates, modifies, and searches tickets within OTRS",
+      "visible": true,
+      "image": null,
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Create Ticket",
+          "description": "Create a new OTRS ticket with mandatory data",
+          "collection": "/api/3/workflow_collections/f471eb18-a1eb-49d9-a235-93dfd46f7d26",
+          "tag": ["#OTRS"],
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8e249e49-7f5b-49c5-b3fd-733ff1af6787",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "8e249e49-7f5b-49c5-b3fd-733ff1af6787"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Ticket",
+              "arguments": {
+                "name": "OTRS",
+                "params": {
+                  "queue": "Example",
+                  "state": "Requested",
+                  "title": "Malware",
+                  "customer": "John Sample",
+                  "priority": "1 very low",
+                  "article_body": "",
+                  "article_subject": "Discovered malware"
+                },
+                "version": "1.0.0",
+                "connector": "otrs",
+                "operation": "create_ticket",
+                "operationTitle": "Create Ticket",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "237",
+              "top": "178",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "c0bdbe03-37a9-4987-b6db-90af660cd9bb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Result",
+              "arguments": {
+                "result": "{{vars.steps.Create_Ticket.data}}"
+              },
+              "status": null,
+              "left": "589",
+              "top": "107",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "b9e750ac-0a23-4733-9637-160ee80ea54a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "fd957d28-e284-479d-a32c-f6a0fdb988f8",
+              "name": "Start -> Create Ticket",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c0bdbe03-37a9-4987-b6db-90af660cd9bb",
+              "sourceStep": "/api/3/workflow_steps/8e249e49-7f5b-49c5-b3fd-733ff1af6787"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "efc29e57-2d67-404e-bb42-2f712db647ed",
+              "name": "Create Ticket -> Result",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b9e750ac-0a23-4733-9637-160ee80ea54a",
+              "sourceStep": "/api/3/workflow_steps/c0bdbe03-37a9-4987-b6db-90af660cd9bb"
+            }
+          ],
+          "uuid": "9d263e36-36ca-485b-8183-0d0fcdc3f35d"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Search Tickets",
+          "description": "Search tickets by title",
+          "collection": "/api/3/workflow_collections/f471eb18-a1eb-49d9-a235-93dfd46f7d26",
+          "tag": ["#OTRS"],
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/496dd61d-2ead-4b0a-976c-ffc31844c022",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "496dd61d-2ead-4b0a-976c-ffc31844c022"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Search Tickets",
+              "arguments": {
+                "name": "OTRS",
+                "params": {
+                  "ticket_title": "malware"
+                },
+                "version": "1.0.0",
+                "connector": "otrs",
+                "operation": "search_tickets",
+                "operationTitle": "Search Tickets",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "171",
+              "top": "171",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "17f65e1a-78ca-4805-83e6-c24bd3ca629e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Result",
+              "arguments": {
+                "Result": "{{vars.steps.Search_Tickets.data}}"
+              },
+              "status": null,
+              "left": "487",
+              "top": "138",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "cd0a461e-493b-45e6-b492-e3bc07b11154"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "eb38da2c-4b93-40d9-b6d3-3547064380f4",
+              "name": "Start -> Search Tickets",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/17f65e1a-78ca-4805-83e6-c24bd3ca629e",
+              "sourceStep": "/api/3/workflow_steps/496dd61d-2ead-4b0a-976c-ffc31844c022"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "d9c41d03-cf75-4c9d-932a-3766562c6d17",
+              "name": "Search Tickets -> Result",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/cd0a461e-493b-45e6-b492-e3bc07b11154",
+              "sourceStep": "/api/3/workflow_steps/17f65e1a-78ca-4805-83e6-c24bd3ca629e"
+            }
+          ],
+          "uuid": "2de1b6bf-3fb3-44b4-8ea2-0895f46719b3"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Ticket",
+          "description": "Fetch an OTRS ticket by ID",
+          "collection": "/api/3/workflow_collections/f471eb18-a1eb-49d9-a235-93dfd46f7d26",
+          "tag": ["#OTRS"],
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/846d7dae-9af1-460a-920c-f5036940adcb",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "846d7dae-9af1-460a-920c-f5036940adcb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Ticket",
+              "arguments": {
+                "name": "OTRS",
+                "params": {
+                  "ticket_id": "1000"
+                },
+                "version": "1.0.0",
+                "connector": "otrs",
+                "operation": "get_ticket",
+                "operationTitle": "Get Ticket",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "138",
+              "top": "157",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "4bc27a5c-fe98-481e-af42-38df5cf5e80f"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Result",
+              "arguments": {
+                "Result": "{{vars.steps.Get_Ticket.data}}"
+              },
+              "status": null,
+              "left": "529",
+              "top": "119",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "97dd4ad8-f11d-4552-ae54-f47d09bbcea5"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "598e5db9-2d8c-4f60-946f-4e208c3e567e",
+              "name": "Start -> Get Ticket",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4bc27a5c-fe98-481e-af42-38df5cf5e80f",
+              "sourceStep": "/api/3/workflow_steps/846d7dae-9af1-460a-920c-f5036940adcb"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "186c40e2-f4c7-469d-a280-7748f26bd9a1",
+              "name": "Get Ticket -> Result",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/97dd4ad8-f11d-4552-ae54-f47d09bbcea5",
+              "sourceStep": "/api/3/workflow_steps/4bc27a5c-fe98-481e-af42-38df5cf5e80f"
+            }
+          ],
+          "uuid": "fed2ef04-e095-4ecf-89e8-99c1fbc1af48"
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update Ticket",
+          "description": "Update an existing OTRS ticket data",
+          "collection": "/api/3/workflow_collections/f471eb18-a1eb-49d9-a235-93dfd46f7d26",
+          "tag": ["#OTRS"],
+          "isActive": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/850105cf-cd27-4320-a9e2-47174a262e1d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "arguments": [],
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "850105cf-cd27-4320-a9e2-47174a262e1d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Ticket",
+              "arguments": {
+                "name": "OTRS",
+                "params": {
+                  "queue": "",
+                  "state": "Requested",
+                  "title": "",
+                  "customer": "",
+                  "priority": "1 very low",
+                  "ticket_id": "1000",
+                  "article_body": "",
+                  "article_subject": ""
+                },
+                "version": "1.0.0",
+                "connector": "otrs",
+                "operation": "update_ticket",
+                "operationTitle": "Update Ticket",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "203",
+              "top": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "38597f74-95c4-4348-b164-766ecf0b5d5d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Result",
+              "arguments": {
+                "Result": "{{vars.steps.Update_Ticket.data}}"
+              },
+              "status": null,
+              "left": "548",
+              "top": "105",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "799aa5c0-f10e-4a8c-8852-93eda94a3bf0"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5e9c22d1-f911-45d0-b702-de3bb64b358b",
+              "name": "Start -> Update Ticket",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/38597f74-95c4-4348-b164-766ecf0b5d5d",
+              "sourceStep": "/api/3/workflow_steps/850105cf-cd27-4320-a9e2-47174a262e1d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c670f978-189d-4513-8444-07992ecff81b",
+              "name": "Update Ticket -> Result",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/799aa5c0-f10e-4a8c-8852-93eda94a3bf0",
+              "sourceStep": "/api/3/workflow_steps/38597f74-95c4-4348-b164-766ecf0b5d5d"
+            }
+          ],
+          "uuid": "c48c1b00-b7b1-4453-a7d9-d7f6d1df4af0"
+        }
+      ],
+      "uuid": "f471eb18-a1eb-49d9-a235-93dfd46f7d26"
+    }
+  ]
+}
