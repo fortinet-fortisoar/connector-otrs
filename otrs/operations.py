@@ -1,8 +1,8 @@
 import requests, json
 import pyotrs
+
 #from pyotrs import Ticket, Article, Client
 from connectors.core.connector import get_logger, ConnectorError
-
 logger = get_logger('otrs')
 
 
@@ -24,13 +24,13 @@ def create_ticket(config, params):
         raise e
 
     try:
-        title = params["title"]
-        queue = params["queue"]
-        state = params["state"]
-        priority = params["priority"]
-        customer = params["customer"]
-        article_subject = params["article_subject"]
-        article_body = params["article_body"]
+        title = params.get("title")
+        queue = params.get("queue")
+        state = params.get("state")
+        priority = params.get("priority")
+        customer = params.get("customer")
+        article_subject = params.get("article_subject")
+        article_body = params.get("article_body")
 
         ticket = pyotrs.Ticket.create_basic(Title=title, Queue=queue, State=state, Priority=priority, CustomerUser=customer)
         if not article_subject:
@@ -54,18 +54,23 @@ def update_ticket(config, params):
     try:
         ticket_id = params["ticket_id"]
         update_params = {}
-        if params["title"]:
+        if params.get("title"):
             update_params.update({"Title": params["title"]})
-        if params["queue"]:
+        if params.get("queue"):
             update_params.update({"Queue": params["queue"]})
-        if params["state"]:
+        if params.get("state"):
             update_params.update({"State": params["state"]})
-        if params["priority"]:
+        if params.get("priority"):
             update_params.update({"Priority": params["priority"]})
-        if params["customer"]:
+        if params.get("customer"):
             update_params.update({"CustomerUser": params["customer"]})
-        if params["article_subject"] and params["article_body"]:
-            new_article = pyotrs.Article({"Subject": params["article_subject"], "Body": params["article_body"]})
+        if params.get("dynamicField"):
+            name = params.get("dynamicField")['Name']
+            value = params.get("dynamicField")['Value']
+            df = pyotrs.DynamicField(name, value)
+            update_params.update(dynamic_fields=[df])
+        if params.get("article_subject") and params.get("article_body"):
+            new_article = pyotrs.Article({"Subject": params.get("article_subject"), "Body": params.get("article_body")})
             update_params.update({"article": new_article})
 
         ticket_info = client.ticket_update(ticket_id, **update_params)
@@ -101,9 +106,15 @@ def search_tickets(config, params):
         raise e
 
     try:
-        title = params["title"]
-        matching_tickets = client.ticket_search(Title=title)
-
+        state = params.get('state')
+        title= params.get('title')
+        ticketType=params.get('tickettype')
+        
+        matching_tickets = client.ticket_search(StateType=state, Types=ticketType)
+        
+        if title:
+          matching_tickets = client.ticket_search(Title=title,StateType=state,Types=ticketType)
+          
         return {"count": len(matching_tickets),
                 "matches": matching_tickets}
     except Exception as e:
