@@ -1,341 +1,373 @@
 {
-    "name": "otrs",
-    "version": "1.0.1",
-    "label": "OTRS",
-    "description": "Creates, modifies, and searches tickets within OTRS",
-    "publisher": "Fortinet",
-    "icon_small_name": "OTRS_32X32.png",
-    "icon_large_name": "OTRS_80X80.png",
-    "category": "Service Management/Ticketing System",
-    "configuration": {
-        "fields": [
-            {
-                "title": "Host URL",
-                "type": "text",
-                "name": "url",
-                "required": true,
-                "visible": true,
-                "editable": true
-            },
-            {
-                "title": "Username",
-                "type": "text",
-                "name": "username",
-                "required": true,
-                "visible": true,
-                "editable": true
-            },
-            {
-                "title": "Password",
-                "type": "password",
-                "name": "password",
-                "required": true,
-                "visible": true,
-                "editable": true
-            }
-        ]
-    },
-    "operations": [
+  "name": "otrs",
+  "version": "1.0.1",
+  "label": "OTRS",
+  "description": "OTRS is a service management suite. OTRS connector provides functionality to create, modify, and search tickets.",
+  "publisher": "Fortinet",
+  "icon_small_name": "OTRS_32X32.png",
+  "icon_large_name": "OTRS_80X80.png",
+  "category": "Service Management/Ticketing System",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "help_online": "",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Host URL",
+        "type": "text",
+        "name": "url",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "description": "URL of the OTRS server to which you will connect and perform the automated operations."
+      },
+      {
+        "title": "Username",
+        "type": "text",
+        "name": "username",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "description": "Username for your account to access the OTRS server to which you will connect and perform the automated operations."
+      },
+      {
+        "title": "Password",
+        "type": "password",
+        "name": "password",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "description": "Password for your account to access the OTRS server to which you will connect and perform the automated operations."
+      },
+      {
+        "title": "Verify SSL",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "value": true,
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "create_ticket",
+      "title": "Create Ticket",
+      "description": "Creates a new OTRS ticket based on the input parameters specified.",
+      "category": "miscellaneous",
+      "annotation": "create_ticket",
+      "output_schema": {
+        "ticket_metadata": {}
+      },
+      "enabled": true,
+      "parameters": [
         {
-            "operation": "create_ticket",
-            "category": "miscellaneous",
-            "annotation": "create_ticket",
-            "output_schema": {
-                "ticket_metadata": {}
-            },
-            "title": "Create Ticket",
-            "description": "Create a new OTRS ticket with mandatory data",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Title",
-                    "type": "text",
-                    "name": "title",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Ticket title"
-                },
-                {
-                    "title": "Queue",
-                    "type": "text",
-                    "name": "queue",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Queue for this ticket to go into"
-                },
-                {
-                    "title": "State",
-                    "type": "select",
-                    "name": "state",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Initial state of this ticket",
-                    "options": [
-                        "open",
-                        "New",
-                        "Requested",
-                        "Pending Approval",
-                        "Rejected",
-                        "Approved",
-                        "In Progress",
-                        "Pending PIR",
-                        "Successful",
-                        "Failed",
-                        "Canceled",
-                        "Retracted"
-                    ]
-                },
-                {
-                    "title": "Priority",
-                    "type": "select",
-                    "name": "priority",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Priority level for this ticket",
-                    "options": [
-                        "1 very low",
-                        "2 low",
-                        "3 normal",
-                        "4 high",
-                        "5 very high"
-                    ]
-                },
-                {
-                    "title": "Customer User",
-                    "type": "text",
-                    "name": "customer",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Name of the customer user for this ticket"
-                },
-                {
-                    "title": "Article Subject",
-                    "type": "text",
-                    "name": "article_subject",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Subject text to use for this ticket's initial article"
-                },
-                {
-                    "title": "Article Body",
-                    "type": "text",
-                    "name": "article_body",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Body text for this ticket's initial article"
-                }
-            ],
-            "open": false
+          "title": "Title",
+          "type": "text",
+          "name": "title",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Ticket title.",
+          "description": "Title of the ticket which you want to create in OTRS."
         },
         {
-            "operation": "search_tickets",
-            "category": "miscellaneous",
-            "annotation": "search_ticket",
-            "output_schema": {
-                "count": "integer",
-                "matches": {}
-            },
-            "title": "Search Tickets",
-            "description": "Search tickets by title, state",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Ticket Title",
-                    "type": "text",
-                    "name": "ticket_title",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Ticket title to search for"
-                },
-                {
-                    "title": "State",
-                    "type": "multiselect",
-                    "name": "state",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "State of this ticket",
-                    "options": [
-                        "new",
-                        "open",
-                        "pending reminder",
-                        "Requested",
-                        "Pending Approval",
-                        "Rejected",
-                        "Approved",
-                        "In Progress",
-                        "Pending PIR",
-                        "Successful",
-                        "Failed",
-                        "Canceled",
-                        "Retracted"
-                    ]
-                },
-                {
-                    "title": "Ticket-Type",
-                    "type": "multiselect",
-                    "name": "tickettype",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Type of this ticket",
-                    "options": [
-                        "Vulnerability (VAS)",
-                        "DC",
-                        "Others"
-                    ]
-                }
-            ],
-            "open": false
+          "title": "Queue",
+          "type": "text",
+          "name": "queue",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Queue for this ticket to go into.",
+          "description": "Queue to which the ticket needs to be created in OTRS."
         },
         {
-            "operation": "get_ticket",
-            "category": "miscellaneous",
-            "annotation": "get_ticket",
-            "output_schema": {
-                "ticket": {}
-            },
-            "title": "Get Ticket",
-            "description": "Fetch an OTRS ticket by ID",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Ticket ID",
-                    "type": "text",
-                    "name": "ticket_id",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Ticket ID to be updated"
-                }
-            ],
-            "open": false
+          "title": "State",
+          "type": "select",
+          "name": "state",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Initial state of this ticket.",
+          "options": [
+            "open",
+            "New",
+            "Requested",
+            "Pending Approval",
+            "Rejected",
+            "Approved",
+            "In Progress",
+            "Pending PIR",
+            "Successful",
+            "Failed",
+            "Canceled",
+            "Retracted"
+          ],
+          "description": "State of the the ticket that needs to be created in OTRS."
         },
         {
-            "operation": "update_ticket",
-            "category": "miscellaneous",
-            "annotation": "update_ticket",
-            "output_schema": {
-                "ticket_metadata": {}
-            },
-            "title": "Update Ticket",
-            "description": "Update an existing OTRS ticket data",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Ticket ID",
-                    "type": "text",
-                    "name": "ticket_id",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Ticket ID to be updated"
-                },
-                {
-                    "title": "Title",
-                    "type": "text",
-                    "name": "title",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Ticket title"
-                },
-                {
-                    "title": "Queue",
-                    "type": "text",
-                    "name": "queue",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Queue for this ticket to go into"
-                },
-                {
-                    "title": "State",
-                    "type": "select",
-                    "name": "state",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Updated state of this ticket",
-                    "options": [
-                        "Requested",
-                        "Pending Approval",
-                        "Rejected",
-                        "Approved",
-                        "In Progress",
-                        "Pending PIR",
-                        "Successful",
-                        "Failed",
-                        "Canceled",
-                        "Retracted"
-                    ]
-                },
-                {
-                    "title": "Priority",
-                    "type": "select",
-                    "name": "priority",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Priority level for this ticket",
-                    "options": [
-                        "1 very low",
-                        "2 low",
-                        "3 normal",
-                        "4 high",
-                        "5 very high"
-                    ]
-                },
-                {
-                    "title": "Customer User",
-                    "type": "text",
-                    "name": "customer",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Name of the customer user for this ticket"
-                },
-                {
-                    "title": "Article Subject",
-                    "type": "text",
-                    "name": "article_subject",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Subject text to use for this ticket's updated article"
-                },
-                {
-                    "title": "Article Body",
-                    "type": "text",
-                    "name": "article_body",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Body text for this ticket's updated article"
-                },
-                {
-                    "title": "DynamicField",
-                    "type": "json",
-                    "name": "dynamicField",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Other Fields, like Dynamic Fields"
-                }
-            ],
-            "open": false
+          "title": "Priority",
+          "type": "select",
+          "name": "priority",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Priority level for this ticket.",
+          "options": [
+            "1 very low",
+            "2 low",
+            "3 normal",
+            "4 high",
+            "5 very high"
+          ],
+          "description": "Priority of the the ticket that needs to be created in OTRS."
+        },
+        {
+          "title": "Customer User",
+          "type": "text",
+          "name": "customer",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Name of the customer user for this ticket.",
+          "description": "Customer name of the the ticket that needs to be created in OTRS."
+        },
+        {
+          "title": "Article Subject",
+          "type": "text",
+          "name": "article_subject",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Subject text to use for this ticket's initial article.",
+          "description": "Article subject of the the ticket that needs to be created in OTRS."
+        },
+        {
+          "title": "Article Body",
+          "type": "text",
+          "name": "article_body",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Body text for this ticket's initial article.",
+          "description": "Article body of the the ticket that needs to be created in OTRS."
         }
-    ],
-    "forked_from": "otrs_1_0_0",
-    "cs_approved": true,
-    "cs_compatible": true,
-    "help_online": "https://help.cybersponse.com/support/solutions/articles/17000074818-otrs-v1-0-0"
+      ],
+      "open": false
+    },
+    {
+      "operation": "search_tickets",
+      "title": "List Tickets",
+      "description": "Retrieves tickets from OTRS based on the input parameters specified.",
+      "category": "miscellaneous",
+      "annotation": "search_ticket",
+      "output_schema": {
+        "count": "",
+        "matches": {}
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "State",
+          "type": "multiselect",
+          "name": "state",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "State of this ticket.",
+          "options": [
+            "new",
+            "open",
+            "pending reminder",
+            "Requested",
+            "Pending Approval",
+            "Rejected",
+            "Approved",
+            "In Progress",
+            "Pending PIR",
+            "Successful",
+            "Failed",
+            "Canceled",
+            "Retracted"
+          ],
+          "description": "State of the the ticket that needs to be searched in OTRS."
+        },
+        {
+          "title": "Ticket Title",
+          "type": "text",
+          "name": "ticket_title",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Ticket title to search for.",
+          "description": "Search a ticket based on the title provided in OTRS."
+        },
+        {
+          "title": "Ticket-Type",
+          "type": "multiselect",
+          "name": "tickettype",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Type of this ticket.",
+          "options": [
+            "Vulnerability (VAS)",
+            "DC",
+            "Others"
+          ],
+          "description": "Ticket type of the the ticket that needs to be searched in OTRS."
+        }
+      ],
+      "open": false
+    },
+    {
+      "operation": "get_ticket",
+      "title": "Get Ticket",
+      "description": "Retrieves particular ticket from OTRS based on the ticket ID you have specified.",
+      "category": "miscellaneous",
+      "annotation": "get_ticket",
+      "output_schema": {
+        "ticket": {}
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Ticket ID",
+          "type": "text",
+          "name": "ticket_id",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Ticket ID to be retrieved.",
+          "description": "The ID of the ticket that needs to be retrieved from OTRS."
+        }
+      ],
+      "open": false
+    },
+    {
+      "operation": "update_ticket",
+      "title": "Update Ticket",
+      "description": "Updates a OTRS ticket based on the input parameters specified.",
+      "category": "miscellaneous",
+      "annotation": "update_ticket",
+      "output_schema": {
+        "ticket_metadata": {}
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Ticket ID",
+          "type": "text",
+          "name": "ticket_id",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Ticket ID to be updated.",
+          "description": "The ID of the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Title",
+          "type": "text",
+          "name": "title",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Ticket title.",
+          "description": "The title of the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Queue",
+          "type": "text",
+          "name": "queue",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Queue for this ticket to go into.",
+          "description": "Queue to which the ticket needs to be updated in OTRS."
+        },
+        {
+          "title": "State",
+          "type": "select",
+          "name": "state",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Updated state of this ticket",
+          "options": [
+            "Requested",
+            "Pending Approval",
+            "Rejected",
+            "Approved",
+            "In Progress",
+            "Pending PIR",
+            "Successful",
+            "Failed",
+            "Canceled",
+            "Retracted"
+          ],
+          "description": "The state of the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Priority",
+          "type": "select",
+          "name": "priority",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Priority level for this ticket.",
+          "options": [
+            "1 very low",
+            "2 low",
+            "3 normal",
+            "4 high",
+            "5 very high"
+          ],
+          "description": "The priority of the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Customer User",
+          "type": "text",
+          "name": "customer",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Name of the customer user for this ticket.",
+          "description": "Customer name of the the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Article Subject",
+          "type": "text",
+          "name": "article_subject",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Subject text to use for this ticket's updated article.",
+          "description": "Article subject of the the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Article Body",
+          "type": "text",
+          "name": "article_body",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Body text for this ticket's updated article.",
+          "description": "Article body of the the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "DynamicField",
+          "type": "json",
+          "name": "dynamicField",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Other Fields, like Dynamic Fields.",
+          "description": "Other fields of the the ticket that needs to be updated in OTRS."
+        }
+      ],
+      "open": false
+    }
+  ]
 }
