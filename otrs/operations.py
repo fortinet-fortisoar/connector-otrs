@@ -1,14 +1,19 @@
+""" Copyright start
+  Copyright (C) 2008 - 2023 Fortinet Inc.
+  All rights reserved.
+  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  Copyright end """
+
 import requests, json
 import pyotrs
-
-#from pyotrs import Ticket, Article, Client
 from connectors.core.connector import get_logger, ConnectorError
+
 logger = get_logger('otrs')
 
 
 def _create_client(config, **kwargs):
     try:
-        client = pyotrs.Client(config["url"], config["username"], config["password"])
+        client = pyotrs.Client(config["url"], config["username"], config["password"], https_verify=config["verify_ssl"])
         client.session_create()
         return client
     except Exception as e:
@@ -20,10 +25,6 @@ def _create_client(config, **kwargs):
 def create_ticket(config, params):
     try:
         client = _create_client(config)
-    except ConnectorError as e:
-        raise e
-
-    try:
         title = params.get("title")
         queue = params.get("queue")
         state = params.get("state")
@@ -32,26 +33,21 @@ def create_ticket(config, params):
         article_subject = params.get("article_subject")
         article_body = params.get("article_body")
 
-        ticket = pyotrs.Ticket.create_basic(Title=title, Queue=queue, State=state, Priority=priority, CustomerUser=customer)
+        ticket = pyotrs.Ticket.create_basic(Title=title, Queue=queue, State=state, Priority=priority,
+                                            CustomerUser=customer)
         if not article_subject:
             article_subject = title
         ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body})
         ticket_info = client.ticket_create(ticket, ticket_article)
 
         return {"ticket_metadata": ticket_info}
-    except Exception as e:
-        error_message = "Error creating OTRS ticket. Error message as follows:\n{0}".format(str(e))
-        logger.exception(error_message)
-        raise ConnectorError(error_message)
+    except Exception as Err:
+        raise ConnectorError(Err)
 
 
 def update_ticket(config, params):
     try:
         client = _create_client(config)
-    except ConnectorError as e:
-        raise e
-
-    try:
         ticket_id = params["ticket_id"]
         update_params = {}
         if params.get("title"):
@@ -76,51 +72,37 @@ def update_ticket(config, params):
         ticket_info = client.ticket_update(ticket_id, **update_params)
 
         return {"ticket_metadata": ticket_info}
-    except Exception as e:
-        error_message = "Error updating ticket {0}. Error message as follows:\n{1}".format(ticket_id, str(e))
-        logger.exception(error_message)
-        raise ConnectorError(error_message)
+    except Exception as Err:
+        raise ConnectorError(Err)
 
 
 def get_ticket(config, params):
     try:
         client = _create_client(config)
-    except ConnectorError as e:
-        raise e
-
-    try:
         ticket_id = params["ticket_id"]
         ticket = client.ticket_get_by_id(ticket_id, articles=True, attachments=False, dynamic_fields=True)
 
         return {"ticket": ticket.to_dct()}
-    except Exception as e:
-        error_message = "Error fetching OTRS ticket {0}. Error message as follows:\n{1}".format(ticket_id, str(e))
-        logger.exception(error_message)
-        raise ConnectorError(error_message)
+    except Exception as Err:
+        raise ConnectorError(Err)
 
 
 def search_tickets(config, params):
     try:
         client = _create_client(config)
-    except ConnectorError as e:
-        raise e
-
-    try:
         state = params.get('state')
-        title= params.get('title')
-        ticketType=params.get('tickettype')
-        
+        title = params.get('title')
+        ticketType = params.get('tickettype')
+
         matching_tickets = client.ticket_search(StateType=state, Types=ticketType)
-        
+
         if title:
-          matching_tickets = client.ticket_search(Title=title,StateType=state,Types=ticketType)
-          
+            matching_tickets = client.ticket_search(Title=title, StateType=state, Types=ticketType)
+
         return {"count": len(matching_tickets),
                 "matches": matching_tickets}
-    except Exception as e:
-        error_message = "Error performing ticket search. Error message as follows:\n{0}".format(str(e))
-        logger.exception(error_message)
-        raise ConnectorError(error_message)
+    except Exception as Err:
+        raise ConnectorError(Err)
 
 
 def check_health(config):
@@ -128,8 +110,8 @@ def check_health(config):
     try:
         client = _create_client(config)
         return True
-    except Exception as e:
-        error_message = "Error in health check. Error message as follows:{0}".format(str(e))
+    except Exception as Err:
+        error_message = "Error in health check. Error message as follows:{0}".format(str(Err))
         logger.exception(error_message)
         raise ConnectorError(error_message)
 
@@ -138,6 +120,5 @@ operations = {
     'create_ticket': create_ticket,
     'update_ticket': update_ticket,
     'get_ticket': get_ticket,
-    'search_tickets': search_tickets,
-    'check_health': check_health
+    'search_tickets': search_tickets
 }
