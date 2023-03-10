@@ -9,17 +9,17 @@
   "category": "Service Management/Ticketing System",
   "cs_approved": false,
   "cs_compatible": true,
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.1/otrs/526/otrs-v1-0-1",
   "configuration": {
     "fields": [
       {
-        "title": "Host URL",
+        "title": "Server URL",
         "type": "text",
         "name": "url",
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "URL of the OTRS server to which you will connect and perform the automated operations."
+        "description": "URL of the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Username",
@@ -28,7 +28,7 @@
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "Username for your account to access the OTRS server to which you will connect and perform the automated operations."
+        "description": "Username for your account to access the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Password",
@@ -37,7 +37,7 @@
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "Password for your account to access the OTRS server to which you will connect and perform the automated operations."
+        "description": "Password for your account to access the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Verify SSL",
@@ -55,7 +55,7 @@
     {
       "operation": "create_ticket",
       "title": "Create Ticket",
-      "description": "Creates a new OTRS ticket based on the input parameters specified.",
+      "description": "Creates a new OTRS ticket based on the queue, state, priority, and other input parameters specified.",
       "category": "miscellaneous",
       "annotation": "create_ticket",
       "output_schema": {
@@ -71,7 +71,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title.",
-          "description": "Title of the ticket which you want to create in OTRS."
+          "description": "Specify the title of the ticket to create in OTRS."
         },
         {
           "title": "Queue",
@@ -81,7 +81,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Queue for this ticket to go into.",
-          "description": "Queue to which the ticket needs to be created in OTRS."
+          "description": "Specify the queue to which the ticket needs to be created in OTRS."
         },
         {
           "title": "State",
@@ -105,7 +105,7 @@
             "Canceled",
             "Retracted"
           ],
-          "description": "State of the the ticket that needs to be created in OTRS."
+          "description": "Specify the state of the the ticket that needs to be created in OTRS."
         },
         {
           "title": "Priority",
@@ -122,7 +122,7 @@
             "4 high",
             "5 very high"
           ],
-          "description": "Priority of the the ticket that needs to be created in OTRS."
+          "description": "Specify the priority of the the ticket that needs to be created in OTRS."
         },
         {
           "title": "Customer User",
@@ -132,7 +132,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Name of the customer user for this ticket.",
-          "description": "Customer name of the the ticket that needs to be created in OTRS."
+          "description": "Specify the customer name of the the ticket that needs to be created in OTRS."
         },
         {
           "title": "Article Subject",
@@ -142,7 +142,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Subject text to use for this ticket's initial article.",
-          "description": "Article subject of the the ticket that needs to be created in OTRS."
+          "description": "Specify the Article subject of the ticket that needs to be created in OTRS."
         },
         {
           "title": "Article Body",
@@ -152,7 +152,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Body text for this ticket's initial article.",
-          "description": "Article body of the the ticket that needs to be created in OTRS."
+          "description": "Specify the article body of the ticket that needs to be created in OTRS."
         },
         {
           "title": "Custom Field",
@@ -162,7 +162,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Other Fields, like Dynamic Fields.",
-          "description": "Other fields of the the ticket that needs to be updated in OTRS."
+          "description": "Specify other fields of the ticket that needs to be updated in OTRS."
         }
       ],
       "open": false
@@ -170,7 +170,7 @@
     {
       "operation": "search_tickets",
       "title": "List Tickets",
-      "description": "Retrieves tickets from OTRS based on the input parameters specified.",
+      "description": "Retrieves tickets from OTRS based on the ticket title, state, ticket type, and other input parameters specified.",
       "category": "miscellaneous",
       "annotation": "search_ticket",
       "output_schema": {
@@ -202,7 +202,7 @@
             "Canceled",
             "Retracted"
           ],
-          "description": "State of the the ticket that needs to be searched in OTRS."
+          "description": "Specify the state of the ticket that needs to be searched in OTRS."
         },
         {
           "title": "Title",
@@ -212,7 +212,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title to search for.",
-          "description": "Search a ticket based on the title provided in OTRS."
+          "description": "Specify the ticket title to search the ticket in OTRS."
         },
         {
           "title": "Type",
@@ -227,7 +227,7 @@
             "DC",
             "Others"
           ],
-          "description": "Ticket type of the the ticket that needs to be searched in OTRS."
+          "description": "Specify the type of ticket that needs to be searched in OTRS."
         }
       ],
       "open": false
@@ -251,7 +251,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket ID to be retrieved.",
-          "description": "The ID of the ticket that needs to be retrieved from OTRS."
+          "description": "Specify the ID of the ticket that needs to be retrieved from OTRS."
         }
       ],
       "open": false
@@ -259,7 +259,7 @@
     {
       "operation": "update_ticket",
       "title": "Update Ticket",
-      "description": "Updates a OTRS ticket based on the input parameters specified.",
+      "description": "Updates an OTRS ticket based on the ticket ID, title, queue, and other input parameters specified.",
       "category": "miscellaneous",
       "annotation": "update_ticket",
       "output_schema": {
@@ -275,7 +275,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket ID to be updated.",
-          "description": "The ID of the ticket that needs to be updated in OTRS."
+          "description": "Specify the ID of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Title",
@@ -285,7 +285,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title.",
-          "description": "The title of the ticket that needs to be updated in OTRS."
+          "description": "Specify the title of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Queue",
@@ -295,7 +295,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Queue for this ticket to go into.",
-          "description": "Queue to which the ticket needs to be updated in OTRS."
+          "description": "Specify the queue to which the ticket needs to be updated in OTRS."
         },
         {
           "title": "State",
@@ -317,7 +317,7 @@
             "Canceled",
             "Retracted"
           ],
-          "description": "The state of the ticket that needs to be updated in OTRS."
+          "description": "Specify the state of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Priority",
@@ -334,7 +334,7 @@
             "4 high",
             "5 very high"
           ],
-          "description": "The priority of the ticket that needs to be updated in OTRS."
+          "description": "Specify the priority of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Customer User",
@@ -344,7 +344,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Name of the customer user for this ticket.",
-          "description": "Customer name of the the ticket that needs to be updated in OTRS."
+          "description": "Specify the customer name of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Article Subject",
@@ -354,7 +354,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Subject text to use for this ticket's updated article.",
-          "description": "Article subject of the the ticket that needs to be updated in OTRS."
+          "description": "Specify the article subject of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Article Body",
@@ -364,7 +364,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Body text for this ticket's updated article.",
-          "description": "Article body of the the ticket that needs to be updated in OTRS."
+          "description": "Specify the article body of the ticket that needs to be updated in OTRS."
         },
         {
           "title": "Custom Field",
@@ -374,7 +374,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Other Fields, like Dynamic Fields.",
-          "description": "Other fields of the the ticket that needs to be updated in OTRS."
+          "description": "Specify other fields of the ticket that needs to be updated in OTRS."
         }
       ],
       "open": false
