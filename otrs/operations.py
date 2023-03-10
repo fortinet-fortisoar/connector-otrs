@@ -32,13 +32,21 @@ def create_ticket(config, params):
         customer = params.get("customer")
         article_subject = params.get("article_subject")
         article_body = params.get("article_body")
+        update_params = {}
+
+        if params.get("dynamicField"):
+            name = params.get("dynamicField")['Name']
+            value = params.get("dynamicField")['Value']
+            df = pyotrs.DynamicField(name, value)
+            update_params.update(dynamic_fields=[df])
 
         ticket = pyotrs.Ticket.create_basic(Title=title, Queue=queue, State=state, Priority=priority,
                                             CustomerUser=customer)
         if not article_subject:
             article_subject = title
         ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body})
-        ticket_info = client.ticket_create(ticket, ticket_article)
+        update_params.update({"article": ticket_article})
+        ticket_info = client.ticket_create(ticket, **update_params)
 
         return {"ticket_metadata": ticket_info}
     except Exception as Err:

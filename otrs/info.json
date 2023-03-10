@@ -153,6 +153,16 @@
           "editable": true,
           "tooltip": "Body text for this ticket's initial article.",
           "description": "Article body of the the ticket that needs to be created in OTRS."
+        },
+        {
+          "title": "Custom Field",
+          "type": "json",
+          "name": "dynamicField",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Other Fields, like Dynamic Fields.",
+          "description": "Other fields of the the ticket that needs to be updated in OTRS."
         }
       ],
       "open": false
@@ -195,7 +205,7 @@
           "description": "State of the the ticket that needs to be searched in OTRS."
         },
         {
-          "title": "Ticket Title",
+          "title": "Title",
           "type": "text",
           "name": "ticket_title",
           "required": false,
@@ -205,7 +215,7 @@
           "description": "Search a ticket based on the title provided in OTRS."
         },
         {
-          "title": "Ticket-Type",
+          "title": "Type",
           "type": "multiselect",
           "name": "tickettype",
           "required": false,
@@ -357,7 +367,7 @@
           "description": "Article body of the the ticket that needs to be updated in OTRS."
         },
         {
-          "title": "DynamicField",
+          "title": "Custom Field",
           "type": "json",
           "name": "dynamicField",
           "required": false,
