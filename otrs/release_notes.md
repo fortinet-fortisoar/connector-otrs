@@ -1,3 +1,5 @@
 #### What's Improved
-- Added new parameters Ticket Type and Ticket State in action List Tickets.
-- Added new parameter Custom Fields in actions Create Ticket and Update Ticket.
+- "Search Ticket" action has multiselect "State" to filter.
+- Added new parameter "Time Span Minutes" in Search Ticket" action.
+- Added support for OTRS "DynamicField" in "Update Ticket" Action
+- Added support for OTRS "Article" in "Update Ticket" Action
