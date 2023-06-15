@@ -8,7 +8,7 @@ import requests, json
 import pyotrs
 from connectors.core.connector import get_logger, ConnectorError
 
-logger = get_logger('otrs_dev')
+logger = get_logger('otrs')
 
 
 def _create_client(config, **kwargs):
