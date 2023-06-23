@@ -1,6 +1,6 @@
 {
   "name": "otrs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "label": "OTRS",
   "description": "OTRS is a service management suite. OTRS connector provides functionality to create, modify, and search tickets.",
   "publisher": "Fortinet",
@@ -9,7 +9,7 @@
   "category": "Service Management/Ticketing System",
   "cs_approved": false,
   "cs_compatible": true,
-  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.1/otrs/526/otrs-v1-0-1",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -92,18 +92,24 @@
           "editable": true,
           "tooltip": "Initial state of this ticket.",
           "options": [
+            "new",
             "open",
-            "New",
-            "Requested",
-            "Pending Approval",
-            "Rejected",
-            "Approved",
-            "In Progress",
-            "Pending PIR",
-            "Successful",
-            "Failed",
-            "Canceled",
-            "Retracted"
+            "active",
+            "resolved",
+            "in progress",
+            "pending reminder",
+            "requested",
+            "pending approval",
+            "rejected",
+            "approved",
+            "pending pir",
+            "successful",
+            "failed",
+            "canceled",
+            "retracted",
+            "removed",
+            "closed - accepted",
+            "closed - resolved"
           ],
           "description": "Specify the state of the the ticket that needs to be created in OTRS."
         },
@@ -163,6 +169,33 @@
           "editable": true,
           "tooltip": "Other Fields, like Dynamic Fields.",
           "description": "Specify other fields of the ticket that needs to be updated in OTRS."
+        },
+        {
+          "title": "Ticket-Type",
+          "type": "select",
+          "name": "newTicketType",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": null,
+          "tooltip": "Type of this ticket",
+	  "description": "Specify ticket type in OTRS."
+          "options": [
+                      "Network Alert (NIDS)",
+                      "Vulnerability (VAS)",
+                      "DC",
+                      "Others"
+                     ]
+        },
+	{
+          "title": "DynamicField",
+          "type": "object",
+          "name": "newDynamicField",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Other Fields, like Dynamic Fields",
+	  "description": "JSON data for DynamicFields in OTRS. Check OTRS implementation."
         }
       ],
       "open": false
@@ -190,17 +223,22 @@
           "options": [
             "new",
             "open",
+            "active",
+            "resolved",
+            "in progress",
             "pending reminder",
-            "Requested",
-            "Pending Approval",
-            "Rejected",
-            "Approved",
-            "In Progress",
-            "Pending PIR",
-            "Successful",
-            "Failed",
-            "Canceled",
-            "Retracted"
+            "requested",
+            "pending approval",
+            "rejected",
+            "approved",
+            "pending pir",
+            "successful",
+            "failed",
+            "canceled",
+            "retracted",
+            "removed",
+            "closed - accepted",
+            "closed - resolved"
           ],
           "description": "Specify the state of the ticket that needs to be searched in OTRS."
         },
@@ -223,11 +261,23 @@
           "editable": true,
           "tooltip": "Type of this ticket.",
           "options": [
+	    "Network Alert (NIDS)",
             "Vulnerability (VAS)",
             "DC",
             "Others"
           ],
           "description": "Specify the type of ticket that needs to be searched in OTRS."
+        },
+	{
+          "title": "Time Span Minutes",
+          "type": "integer",
+          "name": "timeSpanMinutes",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": null,
+	  "tooltip": "Tickets history entries that created less than 'Time Span Minutes' minutes ago in OTRS.",
+	  "description": "Tickets history entries that created less than 'Time Span Minutes' minutes ago in OTRS."
         }
       ],
       "open": false
@@ -306,16 +356,24 @@
           "editable": true,
           "tooltip": "Updated state of this ticket",
           "options": [
-            "Requested",
-            "Pending Approval",
-            "Rejected",
-            "Approved",
-            "In Progress",
-            "Pending PIR",
-            "Successful",
-            "Failed",
-            "Canceled",
-            "Retracted"
+            "new",
+            "open",
+            "active",
+            "resolved",
+            "in progress",
+            "pending reminder",
+            "requested",
+            "pending approval",
+            "rejected",
+            "approved",
+            "pending pir",
+            "successful",
+            "failed",
+            "canceled",
+            "retracted",
+            "removed",
+            "closed - accepted",
+            "closed - resolved"
           ],
           "description": "Specify the state of the ticket that needs to be updated in OTRS."
         },
@@ -367,14 +425,42 @@
           "description": "Specify the article body of the ticket that needs to be updated in OTRS."
         },
         {
-          "title": "Custom Field",
-          "type": "json",
-          "name": "dynamicField",
+          "title": "Ticket-Type",
+          "type": "select",
+          "name": "newTicketType",
           "required": false,
           "visible": true,
           "editable": true,
-          "tooltip": "Other Fields, like Dynamic Fields.",
-          "description": "Specify other fields of the ticket that needs to be updated in OTRS."
+          "value": null,
+          "tooltip": "Type of this ticket",
+	  "description": "Specify ticket type in OTRS."
+          "options": [
+                      "Network Alert (NIDS)",
+                      "Vulnerability (VAS)",
+                      "DC",
+                      "Others"
+                     ]
+        },
+	{
+          "title": "DynamicField",
+          "type": "object",
+          "name": "newDynamicField",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Other Fields, like Dynamic Fields",
+	  "description": "JSON data for DynamicFields in OTRS. Check OTRS implementation for DynamicFields schema."
+        },
+	{
+          "title": "OTRS Article",
+          "type": "object",
+          "name": "oTRSArticle",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": null,
+          "tooltip": "It a reply article to an OTRS ticket.",
+	  "description": "It a reply article to an OTRS ticket. Refer to OTRS Article schema."
         }
       ],
       "open": false
