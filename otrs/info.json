@@ -471,16 +471,6 @@
           "value": null,
           "tooltip": "It a reply article to an OTRS ticket.",
 	  "description": "It a reply article to an OTRS ticket. Refer to OTRS Article schema."
-        },
-	{
-          "title": "Article Sender Type",
-          "type": "text",
-          "name": "articleSenderType",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "value": null,
-          "tooltip": "Customer or Staff. Refer to OTRS implementation for Articler's SenderType"
         }
       ],
       "open": false
