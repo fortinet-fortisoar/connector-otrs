@@ -29,6 +29,7 @@ def create_ticket(config, params):
         raise e
 
     try:
+	articleSenderType = ""
         title = params.get("title")
         queue = params.get("queue")
         state = params.get("state")
@@ -49,9 +50,12 @@ def create_ticket(config, params):
                 value = item['Value']
                 dFields.append(pyotrs.DynamicField(str(name), str(value)))
             logger.debug('dFields {0}'.format(str(dFields)))
+	
+	if params["articleSenderType"]:
+            articleSenderType = params["articleSenderType"]
         if not article_subject:
             article_subject = title
-        ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body})
+        ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body, "MimeType": "text/html", "SenderType": articleSenderType})
         ticket_info = client.ticket_create(ticket, ticket_article, dynamic_fields=dFields)
 
         return {"ticket_metadata": ticket_info}
