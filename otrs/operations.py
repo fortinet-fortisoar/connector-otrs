@@ -29,6 +29,7 @@ def create_ticket(config, params):
         raise e
 
     try:
+	articleSenderType = ""
         title = params.get("title")
         queue = params.get("queue")
         state = params.get("state")
@@ -37,12 +38,25 @@ def create_ticket(config, params):
         article_subject = params.get("article_subject")
         article_body = params.get("article_body")
         ticketType = params.get('newTicketType')
-        logger.error('ticketType:{0}'.format(str(ticketType)))
+        newDynamicField = params.get('newDynamicField')
         ticket = pyotrs.Ticket.create_basic(Title=title, Queue=queue, State=state, Priority=priority, CustomerUser=customer, Type=ticketType)
+	if params["newDynamicField"]:
+	    logger.debug('PARAMS {0}'.format(str(params["newDynamicField"])))
+            dynamicFieldsParameter = params["newDynamicField"]
+	    dFields = []
+            for item in dynamicFieldsParameter:
+                logger.debug('ITEM {0}'.format(str(item)))
+                name = item['Name']
+                value = item['Value']
+                dFields.append(pyotrs.DynamicField(str(name), str(value)))
+            logger.debug('dFields {0}'.format(str(dFields)))
+	
+	if params["articleSenderType"]:
+            articleSenderType = params["articleSenderType"]
         if not article_subject:
             article_subject = title
-        ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body})
-        ticket_info = client.ticket_create(ticket, ticket_article)
+        ticket_article = pyotrs.Article({"Subject": article_subject, "Body": article_body, "MimeType": "text/html", "SenderType": articleSenderType})
+        ticket_info = client.ticket_create(ticket, ticket_article, dynamic_fields=dFields)
 
         return {"ticket_metadata": ticket_info}
     except Exception as e:
@@ -76,15 +90,15 @@ def update_ticket(config, params):
             update_params.update(article=newArticle)
             
         if params["dynamicField"]:
-            logger.error('PARAMS {0}'.format(str(params["dynamicField"])))
+            logger.debug('PARAMS {0}'.format(str(params["dynamicField"])))
             dynamicFieldsParameter = params["dynamicField"]
             dFields = []
             for item in dynamicFieldsParameter:
-              logger.error('ITEM {0}'.format(str(item)))
+              logger.debug('ITEM {0}'.format(str(item)))
               name = item['Name']
               value = item['Value']
               dFields.append(pyotrs.DynamicField(str(name), str(value)))
-            logger.error('dFields {0}'.format(str(dFields)))
+            logger.debug('dFields {0}'.format(str(dFields)))
             update_params.update(dynamic_fields=dFields)
             
 
@@ -124,8 +138,8 @@ def search_tickets(config, params):
         states = params.get('state')
         title= params.get('title')
         ticketType=params.get('tickettype')
-        logger.error('state {0}'.format(str(states)))
-        logger.error('Ticket Type {0}'.format(str(ticketType)))
+        logger.debug('state {0}'.format(str(states)))
+        logger.debug('Ticket Type {0}'.format(str(ticketType)))
         timeSpanMinutes=str(params.get('timeSpanMinutes'))
         
         if states and ticketType:
