@@ -179,7 +179,7 @@
           "editable": true,
           "value": null,
           "tooltip": "Type of this ticket",
-	  "description": "Specify ticket type in OTRS."
+	  "description": "Specify ticket type in OTRS.",
           "options": [
                       "Network Alert (NIDS)",
                       "Vulnerability (VAS)",
@@ -443,7 +443,7 @@
           "editable": true,
           "value": null,
           "tooltip": "Type of this ticket",
-	  "description": "Specify ticket type in OTRS."
+	  "description": "Specify ticket type in OTRS.",
           "options": [
                       "Network Alert (NIDS)",
                       "Vulnerability (VAS)",
