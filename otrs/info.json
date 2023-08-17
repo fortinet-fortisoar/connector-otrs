@@ -9,7 +9,7 @@
   "category": "Service Management/Ticketing System",
   "cs_approved": false,
   "cs_compatible": true,
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.2/otrs/639/otrs-v1-0-2",
   "configuration": {
     "fields": [
       {
@@ -19,7 +19,7 @@
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "URL of the OTRS server to connect and perform the automated operations."
+        "description": "Specify the URL of the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Username",
@@ -28,7 +28,7 @@
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "Username for your account to access the OTRS server to connect and perform the automated operations."
+        "description": "Specify the username for your account to access the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Password",
@@ -37,7 +37,7 @@
         "required": true,
         "visible": true,
         "editable": true,
-        "description": "Password for your account to access the OTRS server to connect and perform the automated operations."
+        "description": "Specify the password for your account to access the OTRS server to connect and perform the automated operations."
       },
       {
         "title": "Verify SSL",
@@ -55,7 +55,7 @@
     {
       "operation": "create_ticket",
       "title": "Create Ticket",
-      "description": "Creates a new OTRS ticket based on the queue, state, priority, and other input parameters specified.",
+      "description": "Creates a new OTRS ticket that contains mandatory data on OTRS based on the title, queue, state, priority, and other input parameters you have specified.",
       "category": "miscellaneous",
       "annotation": "create_ticket",
       "output_schema": {
@@ -71,7 +71,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title.",
-          "description": "Specify the title of the ticket to create in OTRS."
+          "description": "Specify the title of the ticket you want to create in OTRS."
         },
         {
           "title": "Queue",
@@ -81,7 +81,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Queue for this ticket to go into.",
-          "description": "Specify the queue to which the ticket needs to be created in OTRS."
+          "description": "Specify the queue in which you want to create the ticket in OTRS."
         },
         {
           "title": "State",
@@ -111,7 +111,7 @@
             "closed - accepted",
             "closed - resolved"
           ],
-          "description": "Specify the state of the the ticket that needs to be created in OTRS."
+          "description": "Select the state of the ticket you want to create in OTRS. You can choose from options such as, new, open, active, in progress, pending approval, etc."
         },
         {
           "title": "Priority",
@@ -128,7 +128,7 @@
             "4 high",
             "5 very high"
           ],
-          "description": "Specify the priority of the the ticket that needs to be created in OTRS."
+          "description": "Select the priority of the ticket you want to create in OTRS. You can choose from options such as 2-low, 3-normal, 5-very high, etc."
         },
         {
           "title": "Customer User",
@@ -138,7 +138,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Name of the customer user for this ticket.",
-          "description": "Specify the customer name of the the ticket that needs to be created in OTRS."
+          "description": "Specify the name of the customer to be added to the ticket you want to create in OTRS."
         },
         {
           "title": "Article Subject",
@@ -148,7 +148,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Subject text to use for this ticket's initial article.",
-          "description": "Specify the Article subject of the ticket that needs to be created in OTRS."
+          "description": "Specify the subject text to be added to the internal article of the ticket you want to create in OTRS."
         },
         {
           "title": "Article Body",
@@ -158,7 +158,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Body text for this ticket's initial article.",
-          "description": "Specify the article body of the ticket that needs to be created in OTRS."
+          "description": "(Optional) Specify the body text to be added to the internal article of the ticket you want to create in OTRS."
         },
         {
           "title": "Custom Field",
@@ -168,7 +168,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Other Fields, like Dynamic Fields.",
-          "description": "Specify other fields of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Specify other fields in the JSON format that you want to add to the ticket you want to create in OTRS."
         },
         {
           "title": "Ticket-Type",
@@ -178,16 +178,16 @@
           "visible": true,
           "editable": true,
           "value": null,
-          "tooltip": "Type of this ticket",
-	  "description": "Specify ticket type in OTRS.",
+          "tooltip": "Type of this ticket.",
+          "description": "(Optional) Select the type of ticket you want to create in OTRS. You can choose from the following options: Network Alert (NIDS), Vulnerability (VAS), DC, or Others.",
           "options": [
-                      "Network Alert (NIDS)",
-                      "Vulnerability (VAS)",
-                      "DC",
-                      "Others"
-                     ]
+            "Network Alert (NIDS)",
+            "Vulnerability (VAS)",
+            "DC",
+            "Others"
+          ]
         },
-	{
+        {
           "title": "Article Sender Type",
           "type": "text",
           "name": "articleSenderType",
@@ -195,17 +195,18 @@
           "visible": true,
           "editable": true,
           "value": null,
-          "tooltip": "Customer or Staff. Refer to OTRS implementation for Articler's SenderType"
+          "tooltip": "Customer or Staff. Refer to OTRS implementation for Articler's SenderType.",
+          "description": "(Optional) Specify the customer or staff to be added as the sendertype to the internal article of the ticket you want to create in OTRS. Refer to OTRS implementation for Article's SenderType."
         },
-	{
+        {
           "title": "DynamicField",
           "type": "object",
           "name": "newDynamicField",
           "required": false,
           "visible": true,
           "editable": true,
-          "tooltip": "Other Fields, like Dynamic Fields",
-	  "description": "JSON data for DynamicFields in OTRS. Check OTRS implementation."
+          "tooltip": "Other Fields, like Dynamic Fields.",
+          "description": "(Optional) Specify JSON data for DynamicField for the ticket you want to create in OTRS. Check OTRS implementation for DynamicField."
         }
       ],
       "open": false
@@ -250,7 +251,7 @@
             "closed - accepted",
             "closed - resolved"
           ],
-          "description": "Specify the state of the ticket that needs to be searched in OTRS."
+          "description": "Select the state or states of the tickets you want to retrieve from OTRS. You can choose either one option or multiple options from the listed options such as, new, open, active, in progress, pending approval, etc."
         },
         {
           "title": "Title",
@@ -260,7 +261,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title to search for.",
-          "description": "Specify the ticket title to search the ticket in OTRS."
+          "description": "Specify the title of the ticket you want to retrieve from OTRS."
         },
         {
           "title": "Type",
@@ -271,14 +272,14 @@
           "editable": true,
           "tooltip": "Type of this ticket.",
           "options": [
-	    "Network Alert (NIDS)",
+            "Network Alert (NIDS)",
             "Vulnerability (VAS)",
             "DC",
             "Others"
           ],
-          "description": "Specify the type of ticket that needs to be searched in OTRS."
+          "description": "Specify the type of ticket that needs to be searched in OTRS. Select the type or types of tickets you want to retrieve from OTRS. You can choose either one option or multiple options from the listed options, which are Network Alert (NIDS), Vulnerability (VAS), DC, or Others."
         },
-	{
+        {
           "title": "Time Span Minutes",
           "type": "integer",
           "name": "timeSpanMinutes",
@@ -286,8 +287,8 @@
           "visible": true,
           "editable": true,
           "value": null,
-	  "tooltip": "Tickets history entries that created less than 'Time Span Minutes' minutes ago in OTRS.",
-	  "description": "Tickets history entries that created less than 'Time Span Minutes' minutes ago in OTRS."
+          "tooltip": "Tickets history entries that created less than 'Time Span Minutes' minutes ago in OTRS.",
+          "description": "Specify the time span in minutes based on which you want to retrieve tickets created in OTRS. This operation will retrieve those tickets whose history entries were created in OTRS less than the minutes specified in the 'Time Span Minutes' field."
         }
       ],
       "open": false
@@ -295,7 +296,7 @@
     {
       "operation": "get_ticket",
       "title": "Get Ticket",
-      "description": "Retrieves particular ticket from OTRS based on the ticket ID you have specified.",
+      "description": "Retrieves a particular ticket from OTRS based on the ticket ID you have specified.",
       "category": "miscellaneous",
       "annotation": "get_ticket",
       "output_schema": {
@@ -311,7 +312,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket ID to be retrieved.",
-          "description": "Specify the ID of the ticket that needs to be retrieved from OTRS."
+          "description": "Specify the ID of the ticket that you want to retrieve from OTRS."
         }
       ],
       "open": false
@@ -319,7 +320,7 @@
     {
       "operation": "update_ticket",
       "title": "Update Ticket",
-      "description": "Updates an OTRS ticket based on the ticket ID, title, queue, and other input parameters specified.",
+      "description": "Updates data in an existing OTRS ticket based on the ticket ID, title, queue, and other input parameters specified.",
       "category": "miscellaneous",
       "annotation": "update_ticket",
       "output_schema": {
@@ -335,7 +336,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket ID to be updated.",
-          "description": "Specify the ID of the ticket that needs to be updated in OTRS."
+          "description": "Specify the ID of the ticket that you want to update in OTRS."
         },
         {
           "title": "Title",
@@ -345,7 +346,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Ticket title.",
-          "description": "Specify the title of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Specify the title of the ticket you want to update in OTRS."
         },
         {
           "title": "Queue",
@@ -355,7 +356,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Queue for this ticket to go into.",
-          "description": "Specify the queue to which the ticket needs to be updated in OTRS."
+          "description": "(Optional) Specify the queue in which you want to update the ticket in OTRS."
         },
         {
           "title": "State",
@@ -385,7 +386,7 @@
             "closed - accepted",
             "closed - resolved"
           ],
-          "description": "Specify the state of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Select the state of the ticket you want to update in OTRS. You can choose from options such as, new, open, active, in progress, pending approval, etc."
         },
         {
           "title": "Priority",
@@ -402,7 +403,7 @@
             "4 high",
             "5 very high"
           ],
-          "description": "Specify the priority of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Select the priority of the ticket you want to update in OTRS. You can choose from options such as 2-low, 3-normal, 5-very high, etc."
         },
         {
           "title": "Customer User",
@@ -412,7 +413,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Name of the customer user for this ticket.",
-          "description": "Specify the customer name of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Specify the name of the customer to be added to the ticket you want to update in OTRS."
         },
         {
           "title": "Article Subject",
@@ -422,7 +423,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Subject text to use for this ticket's updated article.",
-          "description": "Specify the article subject of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Specify the subject text to be added to the internal article of the ticket you want to update in OTRS."
         },
         {
           "title": "Article Body",
@@ -432,7 +433,7 @@
           "visible": true,
           "editable": true,
           "tooltip": "Body text for this ticket's updated article.",
-          "description": "Specify the article body of the ticket that needs to be updated in OTRS."
+          "description": "(Optional) Specify the body text to be added to the internal article of the ticket you want to update in OTRS."
         },
         {
           "title": "Ticket-Type",
@@ -443,15 +444,15 @@
           "editable": true,
           "value": null,
           "tooltip": "Type of this ticket",
-	  "description": "Specify ticket type in OTRS.",
+          "description": "(Optional) Select the type of ticket you want to update in OTRS. You can choose from the following options: Network Alert (NIDS), Vulnerability (VAS), DC, or Others.",
           "options": [
-                      "Network Alert (NIDS)",
-                      "Vulnerability (VAS)",
-                      "DC",
-                      "Others"
-                     ]
+            "Network Alert (NIDS)",
+            "Vulnerability (VAS)",
+            "DC",
+            "Others"
+          ]
         },
-	{
+        {
           "title": "DynamicField",
           "type": "object",
           "name": "newDynamicField",
@@ -459,9 +460,9 @@
           "visible": true,
           "editable": true,
           "tooltip": "Other Fields, like Dynamic Fields",
-	  "description": "JSON data for DynamicFields in OTRS. Check OTRS implementation for DynamicFields schema."
+          "description": "(Optional) Specify JSON data for DynamicField for the ticket you want to update in OTRS. Refer to the OTRS implementation for DynamicField."
         },
-	{
+        {
           "title": "OTRS Article",
           "type": "object",
           "name": "oTRSArticle",
@@ -470,7 +471,7 @@
           "editable": true,
           "value": null,
           "tooltip": "It a reply article to an OTRS ticket.",
-	  "description": "It a reply article to an OTRS ticket. Refer to OTRS Article schema."
+          "description": "(Optional) Specify the reply article to the existing OTRS ticket. Refer to the OTRS Article schema."
         }
       ],
       "open": false

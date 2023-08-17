@@ -1,7 +1,12 @@
 #### What's Improved
-- "Search Ticket" action has multiselect "State" to filter.
-- Added new parameter "Time Span Minutes" in Search Ticket" action.
-- Added support for OTRS "DynamicField" in "Create Ticket" Action
-- Added support for OTRS "DynamicField" in "Update Ticket" Action
-- Added support for OTRS "Article" in "Update Ticket" Action
-- Added support for "Article Sender Type" in "Create Ticket" action.
+- Updated the "Create Ticket" action as follows:
+  - Added the Ticket-Type parameter to allow users to select the type of ticket to be created in OTRS.
+  - Added the 'DynamicField' input parameter to support the OTRS "DynamicField".
+  - Added the 'Article Sender Type' input parameter to support the OTRS "Article's SenderType".
+- Updated the "List Tickets" action as follows:
+  - Added a new parameter "Time Span Minutes" in the "List Ticket" action.
+  - Updated the "State" and "Type" fields from text fields to multi-select fields.
+- Updated the "Update Ticket" action as follows:
+  - Added the Ticket-Type parameter to allow users to select the type of ticket to be updated in OTRS.
+  - Added the 'DynamicField' input parameter to support the OTRS "DynamicField".
+  - Added the 'OTRS Article' input parameter, which is a reply article to an existing OTRS ticket.
