@@ -141,29 +141,40 @@ def search_tickets(config, params):
         ticketType = params.get('tickettype')
         logger.debug('state {0}'.format(str(states)))
         logger.debug('Ticket Type {0}'.format(str(ticketType)))
-        timeSpanMinutes = str(params.get('timeSpanMinutes'))
+        ticketLastChangeTimeOlderMinutes=str(params.get('timeSpanMinutes'))
 
+        if states and ticketType and title:
+          matching_tickets = client.ticket_search(Title=title,States=states,Types=ticketType)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+        
+        if ticketLastChangeTimeOlderMinutes  and title:
+          matching_tickets = client.ticket_search(Title=title,TicketLastChangeTimeOlderMinutes=ticketLastChangeTimeOlderMinutes,States=states,Types=ticketType)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+
+        
+        if ticketLastChangeTimeOlderMinutes :
+          matching_tickets = client.ticket_search(TicketLastChangeTimeOlderMinutes=ticketLastChangeTimeOlderMinutes,States=states,Types=ticketType)
+          return {"count": len(matching_tickets), "matches": matching_tickets}
+        
         if states and ticketType:
-            matching_tickets = client.ticket_search(States=states, Types=ticketType)
-            return {"count": len(matching_tickets), "matches": matching_tickets}
-
+          matching_tickets = client.ticket_search(States=states, Types=ticketType)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+		  
         if states:
-            matching_tickets = client.ticket_search(States=states, Types=ticketType)
-            return {"count": len(matching_tickets), "matches": matching_tickets}
-
-        if timeSpanMinutes and title:
-            matching_tickets = client.ticket_search(Title=title, TicketChangeTimeNewerMinutes=timeSpanMinutes,
-                                                    States=states, Types=ticketType)
-            return {"count": len(matching_tickets), "matches": matching_tickets}
-
+          matching_tickets = client.ticket_search(States=states, Types=ticketType)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+        
         if title:
-            matching_tickets = client.ticket_search(Title=title, States=states, Types=ticketType)
-            return {"count": len(matching_tickets), "matches": matching_tickets}
-
-        if timeSpanMinutes:
-            matching_tickets = client.ticket_search(TicketChangeTimeNewerMinutes=timeSpanMinutes, States=states,
-                                                    Types=ticketType)
-            return {"count": len(matching_tickets), "matches": matching_tickets}
+          matching_tickets = client.ticket_search(Title=title,States=states)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+        
+        if ticketLastChangeTimeOlderMinutes  and title:
+          matching_tickets = client.ticket_search(Title=title,TicketLastChangeTimeOlderMinutes=ticketLastChangeTimeOlderMinutes,States=states,Types=ticketType)
+          return {"count": len(matching_tickets),"matches": matching_tickets}
+        
+        if ticketLastChangeTimeOlderMinutes :
+          matching_tickets = client.ticket_search(TicketLastChangeTimeOlderMinutes=ticketLastChangeTimeOlderMinutes,States=states,Types=ticketType)
+          return {"count": len(matching_tickets), "matches": matching_tickets}
 
     except Exception as e:
         error_message = "Error performing ticket search. Error message as follows:\n{0}".format(str(e))
