@@ -1,6 +1,6 @@
 {
   "name": "otrs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "label": "OTRS",
   "description": "OTRS is a service management suite. OTRS connector provides functionality to create, modify, and search tickets.",
   "publisher": "Fortinet",
