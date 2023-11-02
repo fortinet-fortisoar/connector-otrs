@@ -1,12 +1,5 @@
-#### What's Improved
-- Updated the "Create Ticket" action as follows:
-  - Added the Ticket-Type parameter to allow users to select the type of ticket to be created in OTRS.
-  - Added the 'DynamicField' input parameter to support the OTRS "DynamicField".
-  - Added the 'Article Sender Type' input parameter to support the OTRS "Article's SenderType".
-- Updated the "List Tickets" action as follows:
-  - Added a new parameter "Time Span Minutes" in the "List Ticket" action.
-  - Updated the "State" and "Type" fields from text fields to multi-select fields.
-- Updated the "Update Ticket" action as follows:
-  - Added the Ticket-Type parameter to allow users to select the type of ticket to be updated in OTRS.
-  - Added the 'DynamicField' input parameter to support the OTRS "DynamicField".
-  - Added the 'OTRS Article' input parameter, which is a reply article to an existing OTRS ticket.
+#### What's Improve
+
+- Replaced the `List Tickets` actions payload parameter `TicketChangeTimeNewerMinutes` with `TicketLastChangeTimeOlderMinutes`. The new parameter `TicketLastChangeTimeOlderMinutes` is used to retrieve a list of tickets where the 'Last Modified Time' is older than a certain number of minutes.
+
+

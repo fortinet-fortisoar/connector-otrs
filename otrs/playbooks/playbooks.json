@@ -3,7 +3,7 @@
   "data": [
     {
       "@type": "WorkflowCollection",
-      "name": "Sample - OTRS - 1.0.1",
+      "name": "Sample - OTRS - 1.0.3",
       "description": "Sample playbooks for \"OTRS\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
       "image": null,
@@ -77,7 +77,7 @@
                   "article_body": "",
                   "article_subject": "adding subject"
                 },
-                "version": "1.0.1",
+                "version": "1.0.3",
                 "connector": "otrs",
                 "operation": "create_ticket",
                 "operationTitle": "Create Ticket",
@@ -172,7 +172,7 @@
                 "params": {
                   "ticket_id": "1154"
                 },
-                "version": "1.0.1",
+                "version": "1.0.3",
                 "connector": "otrs",
                 "operation": "get_ticket",
                 "operationTitle": "Get Ticket",
@@ -248,7 +248,7 @@
                   "dynamicField": "",
                   "article_subject": ""
                 },
-                "version": "1.0.1",
+                "version": "1.0.3",
                 "connector": "otrs",
                 "operation": "update_ticket",
                 "operationTitle": "Update Ticket",
@@ -374,7 +374,7 @@
                   "tickettype": "",
                   "ticket_title": ""
                 },
-                "version": "1.0.1",
+                "version": "1.0.3",
                 "connector": "otrs",
                 "operation": "search_tickets",
                 "operationTitle": "List Tickets",
