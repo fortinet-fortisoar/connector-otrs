@@ -9,7 +9,7 @@
   "category": "Service Management/Ticketing System",
   "cs_approved": false,
   "cs_compatible": true,
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.3/otrs/729/otrs-v1-0-3",
   "configuration": {
     "fields": [
       {
